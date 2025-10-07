@@ -164,12 +164,13 @@ class FilterTool(QWidget):
         # }
         # with open("mapping.json", "w") as f:
         #     json.dump(mapping, f, indent=2)
-        # print(f"Saved {self.annotation_file} with {len(rows)} rows and mapping.json")
+        print(f"Saved {self.annotation_file} with {len(rows)} rows")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     # tool = FilterTool("pexels-pixabay-415829.jpg", "filters/Squid-Game-Front-Man-Mask.png",annotation_file="filters/Squid-Game-Front-Man-Mask_annotation.csv")
-    tool = FilterTool("filters/face.jpg", "filters/Squid-Game-Front-Man-Mask.png",annotation_file="filters/Squid-Game-Front-Man-Mask_annotation.csv")
+    # tool = FilterTool("filters/face.jpg", "filters/Squid-Game-Front-Man-Mask.png",annotation_file="filters/Squid-Game-Front-Man-Mask_annotation.csv")
+    tool = FilterTool("filters/face.jpg", "filters/green-carnival.png",annotation_file="filters/green-carnival_annotations.csv")
     tool.resize(800, 600)
     tool.show()
     sys.exit(app.exec())

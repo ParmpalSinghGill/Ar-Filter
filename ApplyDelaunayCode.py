@@ -174,6 +174,7 @@ def warp_triangle(src_img, dst_img, tri_src, tri_dst, alpha_src=None):
     # Ensure types
     warped = warped.astype(np.float32)
     roi_f = roi.astype(np.float32)
+    # print(roi_f.shape,alpha.shape,warped.shape,tri_src.shape,tri_dst.shape,r_src,r_dst)
     out = roi_f * (1.0 - alpha) + warped * alpha
     dst_img[y : y + h, x : x + w] = np.clip(out, 0, 255).astype(np.uint8)
 
@@ -296,7 +297,9 @@ def run_webcam(stream, filter_path, csv_path, mirror=False, max_faces=1, target_
             # Composite all faces onto a working copy
             out = frame
             for face_pts in faces:
-                out = render_filter_on_face(out, face_pts, filt_bgr, alpha, filt_pts, triangles)
+                try:
+                    out = render_filter_on_face(out, face_pts, filt_bgr, alpha, filt_pts, triangles)
+                except: pass
 
             cv2.imshow(win_name, out)
             key = cv2.waitKey(1) & 0xFF
@@ -311,9 +314,10 @@ def run_webcam(stream, filter_path, csv_path, mirror=False, max_faces=1, target_
 # ---------------- Main ----------------
 if __name__ == "__main__":
     # sys.argv.extend("--image pexels-pixabay-415829.jpg --filter filters/glasses.png --csv filters/glasses_annotations_2.csv --out FacewithFilter.jpg".split())
-    sys.argv.extend("--image pexels-pixabay-415829.jpg --filter filters/Squid-Game-Front-Man-Mask.png --csv filters/Squid-Game-Front-Man-Mask_annotation.csv --out FacewithFilter.jpg".split())
+    # sys.argv.extend("--image pexels-pixabay-415829.jpg --filter filters/Squid-Game-Front-Man-Mask.png --csv filters/Squid-Game-Front-Man-Mask_annotation.csv --out FacewithFilter.jpg".split())
     # sys.argv.extend("--webcam 0 --filter filters/glasses.png --csv filters/glasses_annotations_2.csv".split())
     # sys.argv.extend("--webcam 0 --filter filters/Squid-Game-Front-Man-Mask.png --csv filters/Squid-Game-Front-Man-Mask_annotation.csv".split())
+    sys.argv.extend("--webcam 0 --filter filters/green-carnival.png --csv filters/green-carnival_annotations.csv".split())
 
     parser = argparse.ArgumentParser(description="Apply PNG filter via FaceMesh (image or webcam).")
     parser.add_argument("--image", help="Path to input face image (mutually exclusive with --webcam)")
